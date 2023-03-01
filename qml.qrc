@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Options.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>Training.qml</file>
+        <file>FlatButton.qml</file>
+        <file>Border.qml</file>
+        <file>TimeOption.qml</file>
+    </qresource>
+</RCC>
