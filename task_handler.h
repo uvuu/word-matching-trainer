@@ -21,7 +21,7 @@ private:
 
 private:
     QStringList m_tasks;
-    int m_previousTaskIndex = 0;
+    std::mt19937::result_type m_previousTaskIndex = 0;
     std::uniform_int_distribution<std::mt19937::result_type> m_distribution;
     QStringList m_question;
     QStringList m_answer;
