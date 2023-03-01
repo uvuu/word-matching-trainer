@@ -63,8 +63,13 @@ endif()
 
 target_compile_definitions(word-matching-trainer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+target_compile_options(word-matching-trainer PRIVATE -Wall -Wextra -Wpedantic -Werror)
 target_link_libraries(word-matching-trainer
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Quick
   Qt${QT_VERSION_MAJOR}::QuickControls2)
+
+# TODO: Why doesn't this work?
+#set_property(TARGET word-matching-trainer PROPERTY COMPILE_WARNING_AS_ERROR ON)
+#set(CMAKE_COMPILE_WARNING_AS_ERROR ON)

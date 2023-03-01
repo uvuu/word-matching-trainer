@@ -134,11 +134,6 @@ double Performer::getAnswerLength() const
     QFont f;
     //f.setPixelSize(17);
     QFontMetricsF fm{{}};
-    const auto a = fm.boundingRect("lol").width();
-    const auto a3 = fm.boundingRect("lol").width();
-    const auto a2 = fm.boundingRect("wow").width();
-    const auto a1 = fm.boundingRect("Data tratatatatatatata: pear").width();
-
 
     QRegularExpression re("(\\[(?:\\[??[^\\[]*?\\]))");
 
