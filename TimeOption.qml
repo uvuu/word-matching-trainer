@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.12
 RowLayout {
     property alias text: label.text
     property alias value: spinBox.value
+
     signal valueModified()
 
     Label {
@@ -24,11 +25,8 @@ RowLayout {
         stepSize: 100
         value: 0
         textFromValue: function() { return Number(value / 1000).toString() }
-
         Layout.alignment: Qt.AlignRight
-    }
 
-    Component.onCompleted: {
-        spinBox.valueModified.connect(valueModified)
+        onValueModified: parent.valueModified()
     }
 }

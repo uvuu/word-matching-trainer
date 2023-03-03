@@ -3,6 +3,13 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 Item {
+    property var lastClickedButton : null
+
+    StackView.onActivating: {
+        lastClickedButton.color = Material.backgroundColor
+        lastClickedButton.textColor = Material.foreground
+    }
+
     ColumnLayout {
         id: options
 
@@ -14,6 +21,7 @@ Item {
 
             text: "Question Time"
             value: performer.options.questionTime
+
             onValueChanged: performer.options.questionTime = value
         }
 
@@ -22,6 +30,7 @@ Item {
 
             text: "Answer Time"
             value: performer.options.answerTime
+
             onValueChanged: performer.options.answerTime = value
         }
     }
@@ -36,7 +45,6 @@ Item {
         width: parent.width
         spacing: 5
         boundsBehavior: Flickable.StopAtBounds
-
         model: performer.exercisesNames
 
         delegate: FlatButton {
@@ -60,12 +68,5 @@ Item {
         id: training
 
         Training {}
-    }
-
-    property var lastClickedButton : null
-
-    StackView.onActivating: {
-        lastClickedButton.color = Material.backgroundColor
-        lastClickedButton.textColor = Material.foreground
     }
 }
