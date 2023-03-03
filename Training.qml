@@ -10,6 +10,7 @@ Item {
 
         width: contentWidth + contentSpacing * 2
         text: "Back"
+
         onClicked: {
             performer.stop()
             stackView.pop()
@@ -31,92 +32,70 @@ Item {
 
     Flow {
         id: task
+
         anchors.centerIn: parent
         width: parent.width
 
-        onWidthChanged: rep.update()
+        onWidthChanged: wordsSet.alignWords()
 
         Repeater {
-            id: rep
+            id: wordsSet
+
             model: performer.task
 
+            function alignWords() {
+                let rows = [];
+                for (var i = 0; i < wordsSet.count; i++) {
+                    let item = wordsSet.itemAt(i)
+                    if (!item)
+                        continue
+
+                    item.leftPadding = 0
+                    task.forceLayout()
+
+                    let row = item.y / item.height
+                    if (rows[row] === undefined) {
+                        rows[row] = { "length" : item.width, "first" : i }
+                    } else {
+                        rows[row]["length"] += item.width
+                    }
+                }
+
+                for (const rowData of rows) {
+                    wordsSet.itemAt(rowData.first).leftPadding = (task.width - rowData.length) / 2
+                }
+            }
+
             Label {
-                text: modelData //+ " "
+                property bool isExercisedWord: modelData[0] === "["
+
+                text: modelData
                 wrapMode: Label.Wrap
                 horizontalAlignment: Label.AlignHCenter
-                color: getColor()
-
-                function getColor()
-                {
-                    let color = "white";
-                    if (modelData[0] === "[")
-                    {
-                        color = (performer.remainingTime != 0) ? "transparent" : "yellow";
+                color: {
+                    if (isExercisedWord) {
+                        (performer.remainingTime != 0) ? "transparent" : "yellow"
+                    } else {
+                        "white"
                     }
-
-                    return color;
                 }
 
                 Component.onCompleted: {
+                    text = text.replace('[', '').replace(']', '')
                     // Set the gap width
-                    if (modelData[0] === "[")
-                    {
+                    if (isExercisedWord) {
                         width = performer.getAnswerLength()
                     }
-
-
-                    text = text.replace('[', '').replace(']', '')
-                    rep.update()
+                    wordsSet.alignWords()
                 }
 
                 Rectangle {
-                    id: gapUnderscore
-                    visible: modelData[0] === '['
-
-                    //anchors.leftMargin: parent.leftPadding
-                    //anchors.bottomMargin: -2 // underscore height
-                    //anchors.topMargin: parent.height
-                    //anchors.fill: parent
-
+                    visible: parent.isExercisedWord
                     anchors.top: parent.bottom
                     anchors.left: parent.left
                     anchors.right: parent.right
                     height: 2
-
                     z: parent.z - 1
-                }
-            }
-
-            function update() {
-                let arr = [];
-
-                for (var i = 0; i < rep.count; i++)
-                {
-                    var item = rep.itemAt(i)
-                    if (item)
-                    {
-                        item.leftPadding = 0
-                    }
-                    task.forceLayout()
-                }
-
-                for (var i = 0; i < rep.count; i++)
-                {
-                    var item = rep.itemAt(i)
-                    if (!item)
-                        continue
-
-                    var row = item.y / item.height
-
-                    if (arr[row] == null)
-                        arr[row] = { "length" : item.width, "first" : i }
-                    else
-                        arr[row]["length"] += item.width
-                }
-
-                for (const r of arr)
-                {
-                    rep.itemAt(r.first).leftPadding = (task.width - r.length) / 2
                 }
             }
         }
