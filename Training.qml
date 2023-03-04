@@ -53,7 +53,7 @@ Item {
                     item.leftPadding = 0
                     task.forceLayout()
 
-                    let row = item.y / item.height
+                    const row = item.y / item.height
                     if (rows[row] === undefined) {
                         rows[row] = { "length" : item.width, "first" : i }
                     } else {

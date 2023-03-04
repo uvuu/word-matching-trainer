@@ -5,13 +5,12 @@ import QtQuick.Controls.Material 2.12
 ApplicationWindow {
     id: window
 
+    minimumWidth: 350
+    minimumHeight: 300
     width: 640
     height: 480
     visible: true
     title: qsTr("Matching Trainer")
-
-    // This is unnecessary if you put the same option to a qtquickcontrols2.conf
-    //Material.theme: Material.Dark
 
     StackView {
         id: stackView
