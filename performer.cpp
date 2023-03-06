@@ -49,7 +49,7 @@ void Performer::run()
             setTask(addSpaces(tasksHandler.getQuestion()));
             setRemainingTime(questionTime);
 
-            for (auto i {0}; i < stepCount && m_flag; ++i)
+            for (auto i {0}; (i < stepCount) && m_flag; ++i)
             {
                 std::this_thread::sleep_for(std::chrono::milliseconds(stepSize));
                 setRemainingTime(questionTime - stepSize * (i + 1));
@@ -128,13 +128,9 @@ void Performer::setTask(QStringList task)
 #include <QtGlobal>
 #include <QRegularExpression>
 
-double Performer::getAnswerLength() const
+double Performer::getMaxAnswerLength() const
 {
-    //QFont font("times", 24);
-    QFont f;
-    //f.setPixelSize(17);
     QFontMetricsF fm{{}};
-
     QRegularExpression re("(\\[(?:\\[??[^\\[]*?\\]))");
 
     double maxSize = 0;
@@ -150,9 +146,6 @@ double Performer::getAnswerLength() const
             }
         }
     }
-
-
-    //QQuickView view(QUrl::fromLocalFile("MyItem.qml"));
 
     return maxSize;
 }

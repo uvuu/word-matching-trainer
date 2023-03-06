@@ -36,7 +36,7 @@ public:
     QStringList getTask() const;
     void setTask(QStringList task);
 
-    Q_INVOKABLE double getAnswerLength() const;
+    Q_INVOKABLE double getMaxAnswerLength() const;
 
 signals:
     void exerciseNameChanged();

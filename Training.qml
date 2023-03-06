@@ -44,24 +44,25 @@ Item {
             model: performer.task
 
             function alignWords() {
-                let rows = [];
+                let rowsData = [];
                 for (var i = 0; i < wordsSet.count; i++) {
                     let item = wordsSet.itemAt(i)
-                    if (!item)
+                    if (!item) {
                         continue
+                    }
 
                     item.leftPadding = 0
                     task.forceLayout()
 
                     const row = item.y / item.height
-                    if (rows[row] === undefined) {
-                        rows[row] = { "length" : item.width, "first" : i }
+                    if (rowsData[row] === undefined) {
+                        rowsData[row] = { "length" : item.width, "first" : i }
                     } else {
-                        rows[row]["length"] += item.width
+                        rowsData[row].length += item.width
                     }
                 }
 
-                for (const rowData of rows) {
+                for (const rowData of rowsData) {
                     wordsSet.itemAt(rowData.first).leftPadding = (task.width - rowData.length) / 2
                 }
             }
@@ -84,7 +85,7 @@ Item {
                     text = text.replace('[', '').replace(']', '')
                     // Set the gap width
                     if (isExercisedWord) {
-                        width = performer.getAnswerLength()
+                        width = performer.getMaxAnswerLength()
                     }
                     wordsSet.alignWords()
                 }
