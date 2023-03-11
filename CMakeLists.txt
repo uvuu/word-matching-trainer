@@ -28,21 +28,21 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED)
 
 set(PROJECT_SOURCES
-        main.cpp
 	QML/qml.qrc
 
-	data.h
-	data.cpp
-	data_reader.h
-	data_reader.cpp
-	exercise.h
-	exercise.cpp
-	options.h
-	options.cpp
-	performer.h
-	performer.cpp
-	task_handler.h
-	task_handler.cpp
+	src/main.cpp
+	src/data.h
+	src/data.cpp
+	src/data_reader.h
+	src/data_reader.cpp
+	src/exercise.h
+	src/exercise.cpp
+	src/options.h
+	src/options.cpp
+	src/performer.h
+	src/performer.cpp
+	src/task_handler.h
+	src/task_handler.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

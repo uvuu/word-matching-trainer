@@ -8,6 +8,7 @@ const char* data = ""
 "You [are]\n"
 "We [are]\n"
 "We [were] here but she [wasn't]\n"
+"They [[weren't]] so sure\n"
 
 "(Was / Were)\n"
 "I [was]\n"
@@ -18,4 +19,5 @@ const char* data = ""
 
 "(Long sentence)\n"
 "Car [is] broken and we [are] tired. I guess it [is] not the best moment\n"
-"Car [is] broken and we [are] tired. I guess it [is] not the best moment\n";
+"Car [is] broken and we [are] tired. I guess it [is] not the best moment\n"
+;
