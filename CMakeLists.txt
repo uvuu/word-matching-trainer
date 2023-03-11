@@ -29,7 +29,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED
 
 set(PROJECT_SOURCES
         main.cpp
-        qml.qrc
+	QML/qml.qrc
 
 	data.h
 	data.cpp
