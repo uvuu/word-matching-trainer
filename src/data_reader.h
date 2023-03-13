@@ -6,7 +6,7 @@
 class DataReader
 {
 public:
-    Exercises read(const char* data);
+    Exercises read();
 };
 
 #endif // DATAREADER_H

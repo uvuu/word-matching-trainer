@@ -1,27 +1,42 @@
 #include "data_reader.h"
 
-#include <iostream>
-#include <sstream>
-#include <string>
+#include <QFile>
+#include <QIODevice>
+#include <QTextStream>
 
-Exercises DataReader::read(const char* data)
+namespace
+{
+constexpr auto DATA_FILE_PATH = ":/data.txt";
+constexpr auto EXERCISE_NAME_FIRST_SYMBOL = '(';
+constexpr auto EXERCISE_NAME_LAST_SYMBOL = ')';
+}
+
+Exercises DataReader::read()
 {
     Exercises exercises;
 
-    std::istringstream iss{data};
-    std::string line;
-    while(std::getline(iss, line))
-    {
-        // Read the name of exercise
-        if (line[0] == '(')
+    QFile file{DATA_FILE_PATH};
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return {};
+
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        const auto line = in.readLine();
+        if (line.isEmpty())
         {
-            const auto name = line.substr(1, line.find_first_of(')') - 1);
+            continue;
+        }
+
+        // Read the name of exercise
+        if (line[0] == EXERCISE_NAME_FIRST_SYMBOL)
+        {
+            const auto name = line.mid(1, line.indexOf(EXERCISE_NAME_LAST_SYMBOL) - 1);
             exercises.emplace_back(Exercise{});
-            exercises.back().setName(QString::fromStdString(name));
+            exercises.back().setName(name);
         }
         else if (!exercises.empty()) // Read the tasks set
         {
-            exercises.back().addTask(QString::fromStdString(line));
+            exercises.back().addTask(line);
         }
     }
 
