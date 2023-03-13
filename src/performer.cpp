@@ -4,7 +4,7 @@
 #include <random>
 #include <thread>
 
-#include "data.h" // TODO: This way of getting data should be improved
+#include "data.h" // TODO: This way of getting data should be changed
 #include "data_reader.h"
 #include "task_handler.h"
 
@@ -31,25 +31,13 @@ void Performer::run()
 
         TasksHandler tasksHandler(m_exercises[m_options.getExerciseIndex()].getTasks());
 
-        // TODO: What is this?
-        auto addSpaces = [](QStringList l)
-        {
-            for(int i = 1; i < l.size(); i +=2)
-            {
-                l.insert(i, " ");
-            }
-
-            return l;
-        };
-
         // TODO: decide how to handle all this mess with m_flag
         while(m_flag)
         {
-            tasksHandler.prepareNextTask();
-            setTask(addSpaces(tasksHandler.getQuestion()));
+            setTask(tasksHandler.getNextTask());
             setRemainingTime(questionTime);
 
-            for (auto i {0}; (i < stepCount) && m_flag; ++i)
+            for (auto i = 0; (i < stepCount) && m_flag; ++i)
             {
                 std::this_thread::sleep_for(std::chrono::milliseconds(stepSize));
                 setRemainingTime(questionTime - stepSize * (i + 1));
@@ -58,7 +46,6 @@ void Performer::run()
             if (m_flag)
             {
                 // Waiting for the result showing
-                setTask(addSpaces(tasksHandler.getAnswer()));
                 std::this_thread::sleep_for(std::chrono::milliseconds(m_options.getAnswerTime()));
             }
         }
