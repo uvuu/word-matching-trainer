@@ -8,7 +8,8 @@
 #include "data_reader.h"
 #include "task_handler.h"
 
-Performer::Performer(QObject *parent) : QObject(parent)
+Performer::Performer(QObject *parent)
+    : QObject{parent}
 {
     DataReader reader;
     m_exercises = reader.read(data);
@@ -25,11 +26,11 @@ void Performer::run()
 
     std::thread([this]()
     {
-        const auto stepSize {100};
+        const auto stepSize = 100;
         const auto questionTime = m_options.getQuestionTime();
         const auto stepCount = questionTime / stepSize;
 
-        TasksHandler tasksHandler(m_exercises[m_options.getExerciseIndex()].getTasks());
+        TasksHandler tasksHandler{m_exercises[m_options.getExerciseIndex()].getTasks()};
 
         // TODO: decide how to handle all this mess with m_flag
         while(m_flag)
@@ -118,14 +119,14 @@ void Performer::setTask(QStringList task)
 double Performer::getMaxAnswerLength() const
 {
     QFontMetricsF fm{{}};
-    QRegularExpression re("(\\[(?:\\[??[^\\[]*?\\]))");
+    QRegularExpression re{"(\\[(?:\\[??[^\\[]*?\\]))"};
 
     double maxSize = 0;
 
     const auto& tasks = m_exercises[m_options.getExerciseIndex()].getTasks();
     for (const auto& task : tasks)
     {
-        for (const QRegularExpressionMatch &match : re.globalMatch(task)) {
+        for (const auto &match : re.globalMatch(task)) {
             if (match.hasMatch())
             {
                 const auto w = fm.boundingRect(match.captured()).width();

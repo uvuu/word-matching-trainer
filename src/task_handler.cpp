@@ -5,12 +5,12 @@
 namespace
 {
 std::random_device dev;
-std::mt19937 mt(dev());
+std::mt19937 mt{dev()};
 }
 
 TasksHandler::TasksHandler(const QStringList& tasks)
-    : m_tasks(tasks)
-    , m_distribution(0, m_tasks.size() - 1)
+    : m_tasks{tasks}
+    , m_distribution{0, static_cast<unsigned long>(m_tasks.size() - 1)}
 {
 }
 
