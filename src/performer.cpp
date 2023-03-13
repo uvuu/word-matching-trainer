@@ -124,7 +124,7 @@ double Performer::getMaxAnswerLength() const
     const auto& tasks = m_exercises[m_options.getExerciseIndex()].getTasks();
     for (const auto& task : tasks)
     {
-        for (const auto &match : re.globalMatch(task)) {
+        for (const auto& match : re.globalMatch(task)) {
             if (match.hasMatch())
             {
                 const auto w = fm.boundingRect(match.captured()).width();
