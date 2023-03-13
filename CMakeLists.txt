@@ -29,10 +29,9 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED
 
 set(PROJECT_SOURCES
 	QML/qml.qrc
+	res/res.qrc
 
 	src/main.cpp
-	src/data.h
-	src/data.cpp
 	src/data_reader.h
 	src/data_reader.cpp
 	src/exercise.h

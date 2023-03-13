@@ -4,15 +4,20 @@
 #include <random>
 #include <thread>
 
-#include "data.h" // TODO: This way of getting data should be changed
+#include <QFile>
+#include <QIODeviceBase>
+
 #include "data_reader.h"
 #include "task_handler.h"
 
 Performer::Performer(QObject *parent)
     : QObject{parent}
 {
+    QFile data{":/data.txt"};
+    data.open(QIODeviceBase::ReadOnly);
+
     DataReader reader;
-    m_exercises = reader.read(data);
+    m_exercises = reader.read(data.readAll());
 }
 
 Performer::~Performer()
