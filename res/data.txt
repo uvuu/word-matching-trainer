@@ -4,8 +4,6 @@ He [is]
 She [is]
 You [are]
 We [are]
-We [were] here but she [wasn't]
-They [[weren't]] so sure
 
 (Was / Were)
 I [was]
@@ -13,6 +11,8 @@ He [was]
 She [was]
 You [were]
 We [were]
+We [were] here but she [wasn't]
+They [[weren't]] so sure
 
 (Long sentence)
 Car [is] broken and we [are] tired. I guess it [is] not the best moment
