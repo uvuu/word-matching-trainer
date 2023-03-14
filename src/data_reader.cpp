@@ -17,10 +17,13 @@ Exercises DataReader::read()
 
     QFile file{DATA_FILE_PATH};
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         return {};
+    }
 
-    QTextStream in(&file);
-    while (!in.atEnd()) {
+    QTextStream in{&file};
+    while (!in.atEnd())
+    {
         const auto line = in.readLine();
         if (line.isEmpty())
         {
