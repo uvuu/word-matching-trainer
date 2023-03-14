@@ -67,7 +67,8 @@ target_link_libraries(word-matching-trainer
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
   Qt${QT_VERSION_MAJOR}::Quick
-  Qt${QT_VERSION_MAJOR}::QuickControls2)
+  Qt${QT_VERSION_MAJOR}::QuickControls2
+)
 
 # TODO: Why doesn't this work?
 #set_property(TARGET word-matching-trainer PROPERTY COMPILE_WARNING_AS_ERROR ON)
