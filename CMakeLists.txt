@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(word-matching-trainer LANGUAGES CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+#set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -22,6 +22,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
 #    endif()
 #endif()
+
+message(STATUS Qt${QT_VERSION_MAJOR})
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED)
@@ -61,7 +63,13 @@ endif()
 
 target_compile_definitions(word-matching-trainer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_compile_options(word-matching-trainer PRIVATE -Wall -Wextra -Wpedantic -Werror)
+target_compile_options(word-matching-trainer
+    PRIVATE
+    -Wall
+    -Wextra
+    -Wpedantic
+    -Werror
+)
 target_link_libraries(word-matching-trainer
   PRIVATE
   Qt${QT_VERSION_MAJOR}::Core
@@ -72,3 +80,4 @@ target_link_libraries(word-matching-trainer
 # TODO: Why doesn't this work?
 #set_property(TARGET word-matching-trainer PROPERTY COMPILE_WARNING_AS_ERROR ON)
 #set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
+#set_target_properties(word-matching-trainer PROPERTIES COMPILE_WARNING_AS_ERROR ON)
