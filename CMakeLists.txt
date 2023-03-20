@@ -65,19 +65,17 @@ target_compile_definitions(word-matching-trainer
   PRIVATE
   $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
 )
+# Treat warnings as errors(preferably use [CMAKE_]COMPILE_WARNING_AS_ERROR)
 target_compile_options(word-matching-trainer
     PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
     $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
 )
+# [CMAKE_]COMPILE_WARNING_AS_ERROR is only available since version 3.24
+#set_target_properties(word-matching-trainer PROPERTIES COMPILE_WARNING_AS_ERROR ON)
 target_link_libraries(word-matching-trainer
     PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Quick
     Qt${QT_VERSION_MAJOR}::QuickControls2
 )
-
-# [CMAKE_]COMPILE_WARNING_AS_ERROR is only available since version 3.24
-#set_property(TARGET word-matching-trainer PROPERTY COMPILE_WARNING_AS_ERROR ON)
-#set(CMAKE_COMPILE_WARNING_AS_ERROR ON)
-#set_target_properties(word-matching-trainer PROPERTIES COMPILE_WARNING_AS_ERROR ON)
