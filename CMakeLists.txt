@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # To find out why we need to call find_package() twice here read the following page
-# https://doc.qt.io/qt-6/cmake-qt5-and-qt6-compatibility.html
+# https://doc.qt.io/qt-6/cmake-qt5-and-qt6-compatibility.html.
 # In short: this is due to versioned target names prior to Qt 5.15.
 # And yes, seems we load the same package twice but with different names (QT and Qt${QT_VERSION_MAJOR}).
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
