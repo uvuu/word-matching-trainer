@@ -72,11 +72,6 @@ QStringList Performer::getExercisesNames() const
     return exercisesNames;
 }
 
-QString Performer::getExerciseName() const
-{
-    return m_exercises[m_options.getExerciseIndex()].getName();
-}
-
 int Performer::getRemainingTime() const
 {
     return m_remainingTime;
@@ -105,7 +100,7 @@ void Performer::setTask(QStringList task)
     }
 }
 
-const Exercise* Performer::getExercise()
+const Exercise* Performer::getExercise() const
 {
     return &m_exercises[m_options.getExerciseIndex()];
 }
