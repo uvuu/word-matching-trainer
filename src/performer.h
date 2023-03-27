@@ -17,6 +17,7 @@ class Performer : public QObject
     Q_PROPERTY(QStringList exercisesNames READ getExercisesNames CONSTANT)
 
     // Training page
+    Q_PROPERTY(const Exercise* exercise READ getExercise NOTIFY exerciseChanged)
     Q_PROPERTY(QString exerciseName READ getExerciseName NOTIFY exerciseNameChanged)
     Q_PROPERTY(int remainingTime READ getRemainingTime NOTIFY remainingTimeChanged)
     Q_PROPERTY(QStringList task READ getTask NOTIFY taskChanged)
@@ -30,15 +31,15 @@ public:
 
     Options* getOptions();
     QStringList getExercisesNames() const;
-    QString getExerciseName() const;
+    QString getExerciseName() const; // TODO: Remove it and use ExerciseViewData
     int getRemainingTime() const;
     void setRemainingTime(int remainingTime);
     QStringList getTask() const;
     void setTask(QStringList task);
-
-    Q_INVOKABLE double getMaxAnswerLength() const;
+    const Exercise* getExercise();
 
 signals:
+    void exerciseChanged();
     void exerciseNameChanged();
     void remainingTimeChanged();
     void taskChanged();

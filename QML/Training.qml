@@ -2,8 +2,15 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
+import com.uvuu.qml 1.0
+
 Item {
     Component.onCompleted: performer.run()
+
+    ExerciseViewData {
+        id: exerciseViewData
+        exercise: performer.exercise
+    }
 
     FlatButton {
         id: back
@@ -18,7 +25,7 @@ Item {
     }
 
     Label {
-        text: performer.exerciseName
+        text: exerciseViewData.name
         anchors.right: parent.right
         anchors.verticalCenter: back.verticalCenter
     }
@@ -85,7 +92,7 @@ Item {
                     text = text.replace('[', '').replace(']', '')
                     // Set the gap width
                     if (isExercisedWord) {
-                        width = performer.getMaxAnswerLength()
+                        width = exerciseViewData.gapLength
                     }
                     wordsSet.alignWords()
                 }

@@ -105,34 +105,7 @@ void Performer::setTask(QStringList task)
     }
 }
 
-
-/**
-  I suppose that we can do this optional
- */
-#include <QFont>
-#include <QFontMetricsF>
-#include <QtGlobal>
-#include <QRegularExpression>
-
-double Performer::getMaxAnswerLength() const
+const Exercise* Performer::getExercise()
 {
-    QFontMetricsF fm{{}};
-    QRegularExpression re{"(\\[(?:\\[??[^\\[]*?\\]))"};
-
-    double maxSize = 0;
-
-    const auto& tasks = m_exercises[m_options.getExerciseIndex()].getTasks();
-    for (const auto& task : tasks)
-    {
-        for (const auto& match : re.globalMatch(task))
-        {
-            if (match.hasMatch())
-            {
-                const auto w = fm.boundingRect(match.captured()).width();
-                maxSize = qMax(maxSize, w);
-            }
-        }
-    }
-
-    return maxSize;
+    return &m_exercises[m_options.getExerciseIndex()];
 }

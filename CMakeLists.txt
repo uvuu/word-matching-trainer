@@ -27,6 +27,8 @@ set(PROJECT_SOURCES
     src/data_reader.cpp
     src/exercise.h
     src/exercise.cpp
+    src/exerciseviewdata.h
+    src/exerciseviewdata.cpp
     src/options.h
     src/options.cpp
     src/performer.h
@@ -64,3 +66,14 @@ target_link_libraries(${PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::Quick
     Qt${QT_VERSION_MAJOR}::QuickControls2
 )
+
+#qt_add_qml_module(${PROJECT_NAME}
+#    URI com.uvuu.qml
+#    VERSION 1.0
+#)
+
+#set_target_properties(${PROJECT_NAME} PROPERTIES
+#    QT_QML_MODULE_VERSION 1.0
+#    QT_QML_MODULE_URI     com.uvuu.qml
+#)
+#qt6_qml_type_registration(${PROJECT_NAME})
