@@ -6,7 +6,7 @@
 #include <QQmlComponent>
 
 #include "performer.h"
-#include "exerciseviewdata.h"
+#include "QML/exerciseviewdata.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    qmlRegisterType<ExerciseViewData>("com.uvuu.qml", 1, 0, "ExerciseViewData");
+    qmlRegisterType<ExerciseViewData>("com.uvuu.qml", 1, 0, "ExerciseViewData"); // TODO: Use the url as for organization?
 
     engine.rootContext()->setContextProperty("performer", new Performer{});
     engine.load(url);

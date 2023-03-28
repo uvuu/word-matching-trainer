@@ -18,6 +18,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED)
 
+# Headers are needed here to be visible in the project tree
 set(PROJECT_SOURCES
     QML/qml.qrc
     res/res.qrc
@@ -27,14 +28,15 @@ set(PROJECT_SOURCES
     src/data_reader.cpp
     src/exercise.h
     src/exercise.cpp
-    src/exerciseviewdata.h
-    src/exerciseviewdata.cpp
     src/options.h
     src/options.cpp
     src/performer.h
     src/performer.cpp
     src/task_handler.h
     src/task_handler.cpp
+
+    src/QML/exerciseviewdata.h
+    src/QML/exerciseviewdata.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -67,6 +69,11 @@ target_link_libraries(${PROJECT_NAME}
     Qt${QT_VERSION_MAJOR}::QuickControls2
 )
 
+# Allows us to include any files in 'src' directory without putting 'src/' in front of it.
+# See '#include "exercise.h"' in QML/exerciseviewdata.h.
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
+
+# TODO: Warp it in conditions and/or add a constant with organization url
 #qt_add_qml_module(${PROJECT_NAME}
 #    URI com.uvuu.qml
 #    VERSION 1.0
@@ -76,4 +83,5 @@ target_link_libraries(${PROJECT_NAME}
 #    QT_QML_MODULE_VERSION 1.0
 #    QT_QML_MODULE_URI     com.uvuu.qml
 #)
+##include_directories(${PROJECT_SOURCE_DIR}/src/QML) # It can fix the problem
 #qt6_qml_type_registration(${PROJECT_NAME})
