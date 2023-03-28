@@ -17,7 +17,7 @@ private:
 
 private:
     const QStringList& m_tasks;
-    std::mt19937::result_type m_previousTaskIndex = 0;
+    std::mt19937::result_type m_previousTaskIndex{0};
     std::uniform_int_distribution<std::mt19937::result_type> m_distribution;
 };
 

@@ -47,9 +47,9 @@ private:
 
     int m_remainingTime;
     QStringList m_task;
-    int m_answerLength = 0;
+    int m_answerLength{0};
 
-    std::atomic_bool m_flag = true;
+    std::atomic_bool m_flag{true};
 };
 
 #endif // PERFORMER_H

@@ -22,9 +22,9 @@ public:
     void setExerciseIndex(int exerciseIndex);
 
 private:
-    int m_questionTime = 1000; // ms
-    int m_answerTime = 700; // ms
-    int m_exerciseIndex = 0;
+    int m_questionTime{1000}; // ms
+    int m_answerTime{700}; // ms
+    int m_exerciseIndex{0};
 
 signals:
     void questionTimeChanged();
