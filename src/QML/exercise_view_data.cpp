@@ -3,7 +3,7 @@
 #include <QtGlobal>
 #include <QRegularExpression>
 
-#include "exerciseviewdata.h"
+#include "exercise_view_data.h"
 
 ExerciseViewData::ExerciseViewData(QObject *parent)
     : QObject{parent}
@@ -19,12 +19,12 @@ void ExerciseViewData::setExercise(const Exercise* exercise)
         exerciseChanged();
     }
 }
-QString ExerciseViewData::getName()
+QString ExerciseViewData::getName() const
 {
     return m_exercise ? m_exercise->getName() : "";
 }
 
-double ExerciseViewData::getGapLength()
+double ExerciseViewData::getGapLength() const
 {
     return m_gapLength;
 }

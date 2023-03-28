@@ -12,13 +12,16 @@ class ExerciseViewData : public QObject
     Q_PROPERTY(const Exercise* exercise WRITE setExercise NOTIFY exerciseChanged)
     Q_PROPERTY(QString name READ getName CONSTANT)
     Q_PROPERTY(double gapLength READ getGapLength CONSTANT)
-//    QML_ELEMENT
+
+#if QT_VERSION_6_OR_HIGHER
+    QML_ELEMENT
+#endif
 
 public:
     explicit ExerciseViewData(QObject *parent = nullptr);
     void setExercise(const Exercise* const exercise);
-    QString getName();
-    double getGapLength();
+    QString getName() const;
+    double getGapLength() const;
 
 signals:
     void exerciseChanged();

@@ -6,7 +6,7 @@
 #include <QQmlComponent>
 
 #include "performer.h"
-#include "QML/exerciseviewdata.h"
+#include "QML/exercise_view_data.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     // The values are used by the QSettings class when it is constructed using the empty constructor.
     // This saves having to repeat this information each time a QSettings object is created.
     app.setOrganizationName("YVY");
-    app.setOrganizationDomain("github.com/uvuu/word-matching-trainer");
+    app.setOrganizationDomain("github.com/uvuu");
     app.setApplicationName("word-matching-trainer");
 
     QQmlApplicationEngine engine;
@@ -29,8 +29,6 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-
-    qmlRegisterType<ExerciseViewData>("com.uvuu.qml", 1, 0, "ExerciseViewData"); // TODO: Use the url as for organization?
 
     engine.rootContext()->setContextProperty("performer", new Performer{});
     engine.load(url);

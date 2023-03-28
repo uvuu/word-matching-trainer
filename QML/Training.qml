@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
-import com.uvuu.qml 1.0
+import com.uvuu.qml 1.0 // Here we acquire the ExerciseViewData type
 
 Item {
     Component.onCompleted: performer.run()

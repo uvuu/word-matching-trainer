@@ -18,6 +18,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED)
 
+# The idea of the QT_VERSION_6_OR_HIGHER variable is to allow mock the 5th version of Qt.
+# For example, we may pass it with OFF value to build project in a way Qt5 project would build.
+# For more information, see usage of QT_VERSION_6_OR_HIGHER in the project.
+if(NOT DEFINED QT_VERSION_6_OR_HIGHER AND ${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    set(QT_VERSION_6_OR_HIGHER ON)
+endif()
+
 # Headers are needed here to be visible in the project tree
 set(PROJECT_SOURCES
     QML/qml.qrc
@@ -35,24 +42,47 @@ set(PROJECT_SOURCES
     src/task_handler.h
     src/task_handler.cpp
 
-    src/QML/exerciseviewdata.h
-    src/QML/exerciseviewdata.cpp
+    src/QML/exercise_view_data.h
+    src/QML/exercise_view_data.cpp
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if(QT_VERSION_6_OR_HIGHER)
     qt_add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+
+    # The advanced way to register custom qml types using QML_ELEMENT and etc.
+    # instead of qmlRegister*() functions family.
+    if(${QT_VERSION_MINOR} GREATER_EQUAL 2)
+        qt_add_qml_module(${PROJECT_NAME}
+            URI com.uvuu.qml
+            VERSION 1.0
+        )
+    else()
+        set_target_properties(${PROJECT_NAME} PROPERTIES
+            QT_QML_MODULE_VERSION 1.0
+            QT_QML_MODULE_URI com.uvuu.qml
+            )
+        # It is necessary to include this directory since the file with registrations will be
+        # created in the 'build' directory and it includes files without relative paths.
+        target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML)
+        qt_qml_type_registration(${PROJECT_NAME})
+    endif()
 else()
     if(ANDROID)
-	add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES})
+        add_library(${PROJECT_NAME} SHARED ${PROJECT_SOURCES})
     else()
-	add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
+        add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
     endif()
+
+    # This is an alternative to the modern way of registering a QML type and is suitable
+    # for the 5th Qt version. Obviously it relays on qmlRegister*() functions.
+    target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML/qml_registrar.cpp)
 endif()
 
 # The generator expressions to evaluate the need for QML debug mode
 target_compile_definitions(${PROJECT_NAME}
   PRIVATE
   $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
+  $<$<BOOL:${QT_VERSION_6_OR_HIGHER}>:QT_VERSION_6_OR_HIGHER>
 )
 # Treat warnings as errors(preferably use [CMAKE_]COMPILE_WARNING_AS_ERROR)
 target_compile_options(${PROJECT_NAME}
@@ -70,18 +100,5 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 # Allows us to include any files in 'src' directory without putting 'src/' in front of it.
-# See '#include "exercise.h"' in QML/exerciseviewdata.h.
-target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
-
-# TODO: Warp it in conditions and/or add a constant with organization url
-#qt_add_qml_module(${PROJECT_NAME}
-#    URI com.uvuu.qml
-#    VERSION 1.0
-#)
-
-#set_target_properties(${PROJECT_NAME} PROPERTIES
-#    QT_QML_MODULE_VERSION 1.0
-#    QT_QML_MODULE_URI     com.uvuu.qml
-#)
-##include_directories(${PROJECT_SOURCE_DIR}/src/QML) # It can fix the problem
-#qt6_qml_type_registration(${PROJECT_NAME})
+# See '#include "exercise.h"' in QML/exercise_view_data.h.
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src)
