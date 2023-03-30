@@ -25,6 +25,9 @@ if(NOT DEFINED QT_VERSION_6_OR_HIGHER AND ${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     set(QT_VERSION_6_OR_HIGHER ON)
 endif()
 
+# Set the name for the general qml module
+set(QML_URI com.uvuu.qml)
+
 # Headers are needed here to be visible in the project tree
 set(PROJECT_SOURCES
     QML/qml.qrc
@@ -53,13 +56,13 @@ if(QT_VERSION_6_OR_HIGHER)
     # instead of qmlRegister*() functions family.
     if(${QT_VERSION_MINOR} GREATER_EQUAL 2)
         qt_add_qml_module(${PROJECT_NAME}
-            URI com.uvuu.qml
+            URI ${QML_URI}
             VERSION 1.0
         )
     else()
         set_target_properties(${PROJECT_NAME} PROPERTIES
             QT_QML_MODULE_VERSION 1.0
-            QT_QML_MODULE_URI com.uvuu.qml
+            QT_QML_MODULE_URI ${QML_URI}
             )
         # It is necessary to include this directory since the file with registrations will be
         # created in the 'build' directory and it includes files without relative paths.
@@ -83,6 +86,7 @@ target_compile_definitions(${PROJECT_NAME}
   PRIVATE
   $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
   $<$<BOOL:${QT_VERSION_6_OR_HIGHER}>:QT_VERSION_6_OR_HIGHER>
+  QML_URI="${QML_URI}"
 )
 # Treat warnings as errors(preferably use [CMAKE_]COMPILE_WARNING_AS_ERROR)
 target_compile_options(${PROJECT_NAME}

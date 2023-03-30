@@ -6,7 +6,7 @@ struct QmlRegistrar
 {
     QmlRegistrar()
     {
-        qmlRegisterType<ExerciseViewData>("com.uvuu.qml", 1, 0, "ExerciseViewData");
+        qmlRegisterType<ExerciseViewData>(QML_URI, 1, 0, "ExerciseViewData");
     }
 };
 
