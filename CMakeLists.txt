@@ -60,9 +60,10 @@ if(QT_VERSION_6_OR_HIGHER)
             VERSION 1.0
         )
     else()
-        set_target_properties(${PROJECT_NAME} PROPERTIES
-            QT_QML_MODULE_VERSION 1.0
-            QT_QML_MODULE_URI ${QML_URI}
+        set_target_properties(${PROJECT_NAME}
+            PROPERTIES
+                QT_QML_MODULE_VERSION 1.0
+                QT_QML_MODULE_URI ${QML_URI}
             )
         # It is necessary to include this directory since the file with registrations will be
         # created in the 'build' directory and it includes files without relative paths.
@@ -79,28 +80,39 @@ else()
     # This is an alternative to the modern way of registering a QML type and is suitable
     # for the 5th Qt version. Obviously it relays on qmlRegister*() functions.
     target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML/qml_registrar.cpp)
+
+    # The old way to tell CMake where the Android build files are(also see QT_ANDROID_PACKAGE_SOURCE_DIR)
+    set(ANDROID_PACKAGE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/res/android" CACHE INTERNAL "")
 endif()
+
+# To make the build system to use AndroidManifest.xml and other project-specified resourses
+# we need to point where they are. QT_ANDROID_PACKAGE_SOURCE_DIR is available since Qt6,
+# previous versions have to use ANDROID_PACKAGE_SOURCE_DIR.
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES
+        QT_ANDROID_PACKAGE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/res/android"
+)
 
 # The generator expressions to evaluate the need for QML debug mode
 target_compile_definitions(${PROJECT_NAME}
-  PRIVATE
-  $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
-  $<$<BOOL:${QT_VERSION_6_OR_HIGHER}>:QT_VERSION_6_OR_HIGHER>
-  QML_URI="${QML_URI}"
+    PRIVATE
+        $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
+        $<$<BOOL:${QT_VERSION_6_OR_HIGHER}>:QT_VERSION_6_OR_HIGHER>
+        QML_URI="${QML_URI}"
 )
 # Treat warnings as errors(preferably use [CMAKE_]COMPILE_WARNING_AS_ERROR)
 target_compile_options(${PROJECT_NAME}
     PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
-    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
+        $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
 )
 # [CMAKE_]COMPILE_WARNING_AS_ERROR is only available since version 3.24
 #set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_WARNING_AS_ERROR ON)
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Quick
-    Qt${QT_VERSION_MAJOR}::QuickControls2
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Quick
+        Qt${QT_VERSION_MAJOR}::QuickControls2
 )
 
 # Allows us to include any files in 'src' directory without putting 'src/' in front of it.
