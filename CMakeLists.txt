@@ -87,6 +87,12 @@ endif()
 # created in the 'build' directory and it includes files without relative paths.
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML)
 
+# This is a common way to show extra files on the project tree
+add_custom_target(${PROJECT_NAME}-additions SOURCES res/android/AndroidManifest.xml)
+# The source_group() command may help to create groups under existing targets
+# on project tree but it should operate only files included in those targets.
+#source_group(android FILES ${PROJECT_SOURCE_DIR}/res/android/AndroidManifest.xml)
+
 # To make the build system to use AndroidManifest.xml and other project-specified resourses
 # we need to point where they are. QT_ANDROID_PACKAGE_SOURCE_DIR is available since Qt6,
 # previous versions have to use ANDROID_PACKAGE_SOURCE_DIR.
