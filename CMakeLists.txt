@@ -65,9 +65,7 @@ if(QT_VERSION_6_OR_HIGHER)
                 QT_QML_MODULE_VERSION 1.0
                 QT_QML_MODULE_URI ${QML_URI}
             )
-        # It is necessary to include this directory since the file with registrations will be
-        # created in the 'build' directory and it includes files without relative paths.
-        target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML)
+
         qt_qml_type_registration(${PROJECT_NAME})
     endif()
 else()
@@ -84,6 +82,10 @@ else()
     # The old way to tell CMake where the Android build files are(also see QT_ANDROID_PACKAGE_SOURCE_DIR)
     set(ANDROID_PACKAGE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/res/android" CACHE INTERNAL "")
 endif()
+
+# It is necessary to include this directory since the file with registrations will be
+# created in the 'build' directory and it includes files without relative paths.
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML)
 
 # To make the build system to use AndroidManifest.xml and other project-specified resourses
 # we need to point where they are. QT_ANDROID_PACKAGE_SOURCE_DIR is available since Qt6,
