@@ -1,4 +1,5 @@
 #include <QGuiApplication>
+#include <QIcon>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName("YVY");
     app.setOrganizationDomain("github.com/uvuu");
     app.setApplicationName("word-matching-trainer");
+    app.setWindowIcon(QIcon{":/window_icon.ico"});
 
     QQmlApplicationEngine engine;
     const QUrl url{QStringLiteral("qrc:/main.qml")};
