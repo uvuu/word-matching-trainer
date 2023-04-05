@@ -111,6 +111,7 @@ target_compile_definitions(${PROJECT_NAME}
 # Treat warnings as errors(preferably use [CMAKE_]COMPILE_WARNING_AS_ERROR)
 target_compile_options(${PROJECT_NAME}
     PRIVATE
+        #$<$<CXX_COMPILER_ID:MSVC>:/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup>
         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
 )
@@ -126,3 +127,12 @@ target_link_libraries(${PROJECT_NAME}
 # Allows us to include any files in 'src' directory without putting 'src/' in front of it.
 # See '#include "exercise.h"' in QML/exercise_view_data.h.
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src)
+
+# The following options are required to avoid the console window showing along with the app window.
+# For a better understanding of the code, refer to the answer at https://stackoverflow.com/a/74491601.
+target_link_options(${PROJECT_NAME}
+    PRIVATE
+        # /ENTRY:mainCRTStartup keeps the same "main" function instead of requiring "WinMain"
+        $<$<CXX_COMPILER_ID:MSVC>:/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup>
+        $<$<AND:$<PLATFORM_ID:Windows>,$<NOT:$<CXX_COMPILER_ID:MSVC>>>:-mwindows>
+)
