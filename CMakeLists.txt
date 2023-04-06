@@ -32,6 +32,8 @@ set(QML_URI com.uvuu.qml)
 set(PROJECT_SOURCES
     QML/qml.qrc
     res/res.qrc
+    # Include and compile the resource with a Windows app icon
+    $<$<PLATFORM_ID:Windows>:res/windows/icon.rc>
 
     src/main.cpp
     src/data_reader.h
