@@ -11,6 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(Threads REQUIRED)
 # To find out why we need to call find_package() twice here read the following page
 # https://doc.qt.io/qt-6/cmake-qt5-and-qt6-compatibility.html.
 # In short: this is due to versioned target names prior to Qt 5.15.
@@ -122,6 +123,7 @@ target_compile_options(${PROJECT_NAME}
 #set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_WARNING_AS_ERROR ON)
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
+        Threads::Threads
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Quick
         Qt${QT_VERSION_MAJOR}::QuickControls2
