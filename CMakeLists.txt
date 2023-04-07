@@ -18,6 +18,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick QuickControls2 REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick QuickControls2 REQUIRED)
 
+# Set up general and additional resources
+add_subdirectory(res)
+if (NOT DEFINED RESOURCE_SOURCES)
+    message(FATAL_ERROR "Resources are not defined. Check the\
+        'res' directory for appropriate CMakelists.txt.")
+endif()
+
 # The idea of the QT_VERSION_6_OR_HIGHER variable is to allow mock the 5th version of Qt.
 # For example, we may pass it with OFF value to build project in a way Qt5 project would build.
 # For more information, see usage of QT_VERSION_6_OR_HIGHER in the project.
@@ -30,10 +37,8 @@ set(QML_URI com.uvuu.qml)
 
 # Headers are needed here to be visible in the project tree
 set(PROJECT_SOURCES
+    ${RESOURCE_SOURCES} # This variable is defined in res/CMakeLists.txt
     QML/qml.qrc
-    res/res.qrc
-    # Include and compile the resource with a Windows app icon
-    $<$<PLATFORM_ID:Windows>:res/windows/icon.rc>
 
     src/main.cpp
     src/data_reader.h
@@ -89,12 +94,6 @@ endif()
 # created in the 'build' directory and it includes files without relative paths.
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML)
 
-# This is a common way to show extra files on the project tree
-add_custom_target(${PROJECT_NAME}-additions SOURCES res/android/AndroidManifest.xml)
-# The source_group() command may help to create groups under existing targets
-# on project tree but it should operate only files included in those targets.
-#source_group(android FILES ${PROJECT_SOURCE_DIR}/res/android/AndroidManifest.xml)
-
 # To make the build system to use AndroidManifest.xml and other project-specified resourses
 # we need to point where they are. QT_ANDROID_PACKAGE_SOURCE_DIR is available since Qt6,
 # previous versions have to use ANDROID_PACKAGE_SOURCE_DIR.
@@ -110,6 +109,7 @@ target_compile_definitions(${PROJECT_NAME}
         $<$<BOOL:${QT_VERSION_6_OR_HIGHER}>:QT_VERSION_6_OR_HIGHER>
         QML_URI="${QML_URI}"
 )
+
 # Treat warnings as errors(preferably use [CMAKE_]COMPILE_WARNING_AS_ERROR)
 target_compile_options(${PROJECT_NAME}
     PRIVATE
@@ -117,6 +117,7 @@ target_compile_options(${PROJECT_NAME}
         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
         $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
 )
+
 # [CMAKE_]COMPILE_WARNING_AS_ERROR is only available since version 3.24
 #set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_WARNING_AS_ERROR ON)
 target_link_libraries(${PROJECT_NAME}
