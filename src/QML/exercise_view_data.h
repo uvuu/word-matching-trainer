@@ -6,6 +6,13 @@
 
 #include "exercise.h"
 
+// Looks like the Qt6 can perform this registration on its own.
+// The purpose of this registration is to allow the "exercise" property to set in QML.
+// See the row "exercise: performer.exercise".
+#if !defined(QT_VERSION_6_OR_HIGHER)
+Q_DECLARE_METATYPE(const Exercise*)
+#endif
+
 class ExerciseViewData : public QObject
 {
     Q_OBJECT

@@ -39,8 +39,9 @@ void ExerciseViewData::updateGapLength()
     const auto& tasks = m_exercise->getTasks();
     for (const auto& task : tasks)
     {
-        for (const auto& match : re.globalMatch(task))
-        {
+        auto itMatch = re.globalMatch(task);
+        while (itMatch.hasNext()) {
+            const auto match = itMatch.next();
             if (match.hasMatch())
             {
                 const auto w = fm.boundingRect(match.captured()).width();

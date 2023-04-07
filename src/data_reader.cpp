@@ -34,7 +34,7 @@ Exercises DataReader::read()
         if (line[0] == EXERCISE_NAME_FIRST_SYMBOL)
         {
             const auto name = line.mid(1, line.indexOf(EXERCISE_NAME_LAST_SYMBOL) - 1);
-            exercises.emplace_back(Exercise{});
+            exercises.push_back(Exercise{});
             exercises.back().setName(name);
         }
         else if (!exercises.empty()) // Read the tasks set
