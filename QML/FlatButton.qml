@@ -11,7 +11,7 @@ Rectangle {
 
     signal clicked()
 
-    implicitWidth: parent.width
+    implicitWidth: parent ? parent.width : 0
     implicitHeight: contentSpacing * 3
     border.color: label.color
     border.width: 1
