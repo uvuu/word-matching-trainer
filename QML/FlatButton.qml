@@ -21,7 +21,7 @@ Rectangle {
     Label {
         id: label
 
-        text: "Back"
+        text: ""
         anchors.centerIn: parent
     }
 
