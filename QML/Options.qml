@@ -41,8 +41,9 @@ Item {
         id:list
 
         anchors.topMargin: 20
+        anchors.bottomMargin: 10
         anchors.top: options.bottom
-        anchors.bottom: parent.bottom
+        anchors.bottom: pagination.top
         width: parent.width
         spacing: 5
         boundsBehavior: Flickable.StopAtBounds
@@ -69,5 +70,11 @@ Item {
         id: training
 
         Training {}
+    }
+
+    Pagination {
+        id: pagination
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }
