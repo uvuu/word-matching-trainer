@@ -7,5 +7,6 @@
         <file>FlatButton.qml</file>
         <file>Border.qml</file>
         <file>TimeOption.qml</file>
+        <file>Pagination.qml</file>
     </qresource>
 </RCC>
