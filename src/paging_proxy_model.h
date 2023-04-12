@@ -12,6 +12,7 @@ class PagingProxyModel: public QAbstractProxyModel
     QML_ELEMENT
 
     Q_PROPERTY(int page READ getPage WRITE setPage NOTIFY pageChanged)
+    Q_PROPERTY(int pageSize READ getPageSize WRITE setPageSize NOTIFY pageSizeChanged)
 
 public:
     enum PagingInfoRole
@@ -35,15 +36,17 @@ public:
 
     virtual QHash<int, QByteArray> roleNames() const override;
 
-    Q_INVOKABLE void setPageSize(int pageSize);
-
 signals:
     void pageChanged();
+    void pageSizeChanged();
 
 private:
     int getPage() const;
     void setPage(int page);
-    int getFirtVisibleIndex() const;
+    int getPageSize() const;
+    void setPageSize(int pageSize);
+    int getStartIndex() const;
+    void reset();
 
 private:
     int m_page{0};

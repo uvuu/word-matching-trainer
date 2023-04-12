@@ -27,7 +27,7 @@ int PagingProxyModel::rowCount(const QModelIndex& parent) const
         return sourceModel()->rowCount(parent);
     }
 
-    const auto aheadItems = sourceModel()->rowCount() - getFirtVisibleIndex();
+    const auto aheadItems = sourceModel()->rowCount() - getStartIndex();
     return (aheadItems >= m_pageSize) ? m_pageSize : aheadItems;
 }
 
@@ -48,13 +48,13 @@ QVariant PagingProxyModel::data(const QModelIndex& index, int role) const
 
 QModelIndex PagingProxyModel::mapToSource(const QModelIndex& proxyIndex) const
 {
-    const auto row = proxyIndex.row() + getFirtVisibleIndex();
+    const auto row = proxyIndex.row() + getStartIndex();
     return sourceModel()->index(row, proxyIndex.column());
 }
 
 QModelIndex PagingProxyModel::mapFromSource(const QModelIndex& sourceIndex) const
 {
-    const auto row = sourceIndex.row() - getFirtVisibleIndex();
+    const auto row = sourceIndex.row() - getStartIndex();
     return createIndex(row, sourceIndex.column());
 }
 
@@ -64,16 +64,6 @@ QHash<int, QByteArray> PagingProxyModel::roleNames() const
     roleNames.insert(SourceIndexRole, "sourceIndex");
 
     return roleNames;
-}
-
-void PagingProxyModel::setPageSize(int pageSize)
-{
-    if (m_pageSize != pageSize)
-    {
-        m_pageSize = pageSize;
-        beginResetModel();
-        endResetModel();
-    }
 }
 
 int PagingProxyModel::getPage() const
@@ -88,12 +78,33 @@ void PagingProxyModel::setPage(int page)
         m_page = page;
         pageChanged();
 
-        beginResetModel();
-        endResetModel();
+        reset();
     }
 }
 
-int PagingProxyModel::getFirtVisibleIndex() const
+int PagingProxyModel::getPageSize() const
+{
+    return m_pageSize;
+}
+
+void PagingProxyModel::setPageSize(int pageSize)
+{
+    if (m_pageSize != pageSize)
+    {
+        m_pageSize = pageSize;
+        pageSizeChanged();
+
+        reset();
+    }
+}
+
+int PagingProxyModel::getStartIndex() const
 {
     return m_page * m_pageSize;
+}
+
+void PagingProxyModel::reset()
+{
+    beginResetModel();
+    endResetModel();
 }
