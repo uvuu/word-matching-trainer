@@ -5,8 +5,13 @@ PagingProxyModel::PagingProxyModel(QObject *parent)
 {
 }
 
-QModelIndex PagingProxyModel::index(int row, int column, const QModelIndex&) const
+QModelIndex PagingProxyModel::index(int row, int column, const QModelIndex& parent) const
 {
+    if ((row < 0 || row >= rowCount(parent))|| (column < 0 || column >= columnCount(parent)))
+    {
+        return QModelIndex();
+    }
+
     return createIndex(row, column);
 }
 
@@ -15,18 +20,23 @@ QModelIndex PagingProxyModel::parent(const QModelIndex&) const
     return QModelIndex();
 }
 
-int PagingProxyModel::rowCount(const QModelIndex &) const
+int PagingProxyModel::rowCount(const QModelIndex& parent) const
 {
-    const auto restOfItems = sourceModel()->rowCount() - m_page * m_itemsPerPage ;
-    return (restOfItems >= m_itemsPerPage) ? m_itemsPerPage : restOfItems;
+    if (parent.isValid())
+    {
+        return sourceModel()->rowCount(parent);
+    }
+
+    const auto aheadItems = sourceModel()->rowCount() - getFirtVisibleIndex();
+    return (aheadItems >= m_pageSize) ? m_pageSize : aheadItems;
 }
 
-int PagingProxyModel::columnCount(const QModelIndex &) const
+int PagingProxyModel::columnCount(const QModelIndex& parent) const
 {
-    return sourceModel()->columnCount();
+    return sourceModel()->columnCount(mapToSource(parent));
 }
 
-QVariant PagingProxyModel::data(const QModelIndex &index, int role) const
+QVariant PagingProxyModel::data(const QModelIndex& index, int role) const
 {
     if (role == SourceIndexRole)
     {
@@ -38,15 +48,14 @@ QVariant PagingProxyModel::data(const QModelIndex &index, int role) const
 
 QModelIndex PagingProxyModel::mapToSource(const QModelIndex& proxyIndex) const
 {
-    const auto row = proxyIndex.row() + m_page * m_itemsPerPage;
+    const auto row = proxyIndex.row() + getFirtVisibleIndex();
     return sourceModel()->index(row, proxyIndex.column());
 }
 
-QModelIndex PagingProxyModel::mapFromSource(const QModelIndex &sourceIndex) const
+QModelIndex PagingProxyModel::mapFromSource(const QModelIndex& sourceIndex) const
 {
-    const auto row = sourceIndex.row() - m_page * m_itemsPerPage;
-    //TODO: Should we use createIndex here?
-    return index(row, sourceIndex.column(), {});
+    const auto row = sourceIndex.row() - getFirtVisibleIndex();
+    return createIndex(row, sourceIndex.column());
 }
 
 QHash<int, QByteArray> PagingProxyModel::roleNames() const
@@ -57,6 +66,16 @@ QHash<int, QByteArray> PagingProxyModel::roleNames() const
     return roleNames;
 }
 
+void PagingProxyModel::setPageSize(int pageSize)
+{
+    if (m_pageSize != pageSize)
+    {
+        m_pageSize = pageSize;
+        beginResetModel();
+        endResetModel();
+    }
+}
+
 int PagingProxyModel::getPage() const
 {
     return m_page;
@@ -64,15 +83,17 @@ int PagingProxyModel::getPage() const
 
 void PagingProxyModel::setPage(int page)
 {
-    m_page = page;
-    beginResetModel();
-    endResetModel();
+    if (m_page != page)
+    {
+        m_page = page;
+        pageChanged();
+
+        beginResetModel();
+        endResetModel();
+    }
 }
 
-void PagingProxyModel::setItemsPerPage(int itemsPerPage)
+int PagingProxyModel::getFirtVisibleIndex() const
 {
-    m_itemsPerPage = itemsPerPage;
-    beginResetModel();
-    endResetModel();
+    return m_page * m_pageSize;
 }
-
