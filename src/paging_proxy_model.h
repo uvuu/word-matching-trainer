@@ -9,7 +9,10 @@
 class PagingProxyModel: public QAbstractProxyModel
 {
     Q_OBJECT
+
+#if QT_VERSION_6_OR_HIGHER
     QML_ELEMENT
+#endif
 
     Q_PROPERTY(int page READ getPage WRITE setPage NOTIFY pageChanged)
     Q_PROPERTY(int pageSize READ getPageSize WRITE setPageSize NOTIFY pageSizeChanged)
