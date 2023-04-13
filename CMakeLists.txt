@@ -52,6 +52,8 @@ set(PROJECT_SOURCES
     src/performer.cpp
     src/task_handler.h
     src/task_handler.cpp
+    src/paging_proxy_model.h
+    src/paging_proxy_model.cpp
 
     src/QML/exercise_view_data.h
     src/QML/exercise_view_data.cpp
