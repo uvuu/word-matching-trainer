@@ -11,6 +11,12 @@ Performer::Performer(QObject *parent)
     : QObject{parent}
     , m_exercises(DataReader{}.read())
 {
+    QStringList exercisesNames;
+    for (const auto& exercise : m_exercises)
+    {
+        exercisesNames.append(exercise.getName());
+    }
+    m_exerciesNames.setStringList(exercisesNames);
 }
 
 Performer::~Performer()
@@ -61,15 +67,9 @@ Options* Performer::getOptions()
     return &m_options;
 }
 
-QStringList Performer::getExercisesNames() const
+QStringListModel* Performer::getExercisesNames()
 {
-    QStringList exercisesNames;
-    for (const auto& exercise : m_exercises)
-    {
-        exercisesNames.append(exercise.getName());
-    }
-
-    return exercisesNames;
+    return &m_exerciesNames;
 }
 
 int Performer::getRemainingTime() const

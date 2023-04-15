@@ -4,6 +4,7 @@
 #include <atomic>
 
 #include <QObject>
+#include <QStringListModel>
 
 #include "exercise.h"
 #include "options.h"
@@ -14,10 +15,10 @@ class Performer : public QObject
 
     // Options page
     Q_PROPERTY(Options* options READ getOptions CONSTANT)
-    Q_PROPERTY(QStringList exercisesNames READ getExercisesNames CONSTANT)
+    Q_PROPERTY(QStringListModel* exercisesNames READ getExercisesNames CONSTANT)
 
     // Training page
-    Q_PROPERTY(const Exercise* exercise READ getExercise NOTIFY exerciseChanged)
+    Q_PROPERTY(const Exercise* exercise READ getExercise NOTIFY exerciseChanged CONSTANT)
     Q_PROPERTY(int remainingTime READ getRemainingTime NOTIFY remainingTimeChanged)
     Q_PROPERTY(QStringList task READ getTask NOTIFY taskChanged)
 
@@ -29,7 +30,7 @@ public:
     Q_INVOKABLE void stop();
 
     Options* getOptions();
-    QStringList getExercisesNames() const;
+    QStringListModel* getExercisesNames();
     int getRemainingTime() const;
     void setRemainingTime(int remainingTime);
     QStringList getTask() const;
@@ -37,6 +38,7 @@ public:
     const Exercise* getExercise() const;
 
 signals:
+    void exerciseNamesChanged();
     void exerciseChanged();
     void remainingTimeChanged();
     void taskChanged();
@@ -47,6 +49,7 @@ private:
 
     int m_remainingTime;
     QStringList m_task;
+    QStringListModel m_exerciesNames;
     int m_answerLength{0};
 
     std::atomic_bool m_flag{true};

@@ -52,7 +52,7 @@ Item {
         delegate: FlatButton {
             id: option
 
-            text: modelData
+            text: model.display
 
             onClicked: {
                 option.color = Material.foreground
