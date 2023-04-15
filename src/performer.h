@@ -47,10 +47,9 @@ private:
     Exercises m_exercises;
     Options m_options;
 
-    int m_remainingTime;
+    int m_remainingTime{0};
     QStringList m_task;
     QStringListModel m_exerciesNames;
-    int m_answerLength{0};
 
     std::atomic_bool m_flag{true};
 };
