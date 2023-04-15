@@ -7,7 +7,6 @@
 #include <QQmlComponent>
 
 #include "performer.h"
-#include "QML/exercise_view_data.h"
 
 int main(int argc, char *argv[])
 {
