@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Layouts 1.12
+import Qt.labs.settings 1.0
 
 import com.uvuu.qml 1.0 // Here we acquire the PagingProxyModel type
 
@@ -92,6 +93,11 @@ Item {
         visible: pageCount > 1
 
         onCurrentPageChanged: pagedExercisesModel.page = currentPage
+    }
+
+    Settings {
+        id: settings
+        property alias page: pagination.currentPage
     }
 
     Component {
