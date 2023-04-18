@@ -3,6 +3,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Layouts 1.12
 
+import com.uvuu.qml 1.0 // Here we acquire the PagingProxyModel type
+
 Item {
     property var lastClickedButton : null
 
@@ -36,18 +38,22 @@ Item {
         }
     }
 
+    PagingProxyModel {
+        id: pagedExercisesModel
+        sourceModel: performer.exercisesNames
+    }
+
     ListView
     {
-        id:list
+        id: list
 
         anchors.topMargin: 20
-        anchors.bottomMargin: 10
         anchors.top: options.bottom
         anchors.bottom: pagination.top
         width: parent.width
         spacing: 5
         boundsBehavior: Flickable.StopAtBounds
-        model: performer.exercisesNames
+        model: pagedExercisesModel
 
         delegate: FlatButton {
             id: option
@@ -59,22 +65,33 @@ Item {
                 option.textColor = Material.backgroundColor
                 lastClickedButton = option
 
-                performer.options.exerciseIndex = index
+                performer.options.exerciseIndex = model.sourceIndex
 
                 stackView.push(training)
             }
         }
+
+        onHeightChanged: {
+            if (count <= 0 || list.itemAtIndex(0) === null) {
+                return
+            }
+
+            const pageSize = height / (list.itemAtIndex(0).height + spacing)
+            pagedExercisesModel.pageSize = pageSize > 0 ? pageSize : 1
+        }
+    }
+
+    Pagination {
+        id: pagination
+
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        //visible: pageCount > 1
     }
 
     Component {
         id: training
 
         Training {}
-    }
-
-    Pagination {
-        id: pagination
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 }
