@@ -77,6 +77,7 @@ Item {
             }
 
             const pageSize = height / (list.itemAtIndex(0).height + spacing)
+            //TODO: Move the check to the model itself. Probably add the assert there.
             pagedExercisesModel.pageSize = pageSize > 0 ? pageSize : 1
         }
     }
@@ -84,9 +85,13 @@ Item {
     Pagination {
         id: pagination
 
+        currentPage: pagedExercisesModel.page
+        pageCount: pagedExercisesModel.pageCount
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        //visible: pageCount > 1
+        visible: pageCount > 1
+
+        onCurrentPageChanged: pagedExercisesModel.page = currentPage
     }
 
     Component {

@@ -93,14 +93,27 @@ void PagingProxyModel::setPageSize(int pageSize)
     {
         m_pageSize = pageSize;
         pageSizeChanged();
+        pageCountChanged();
 
         reset();
     }
 }
 
+int PagingProxyModel::getPageCount()const
+{
+    auto pageCount = 1;
+    if (sourceModel())
+    {
+        const bool hasPartiallyFilledPage = sourceModel()->rowCount() % getPageSize();
+        pageCount = sourceModel()->rowCount() / getPageSize() + (hasPartiallyFilledPage ? 1 : 0);
+    }
+
+    return pageCount;
+}
+
 int PagingProxyModel::getStartIndex() const
 {
-    return m_page * m_pageSize;
+    return (m_page - 1) * m_pageSize;
 }
 
 void PagingProxyModel::reset()

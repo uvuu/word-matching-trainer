@@ -16,6 +16,7 @@ class PagingProxyModel: public QAbstractProxyModel
 
     Q_PROPERTY(int page READ getPage WRITE setPage NOTIFY pageChanged)
     Q_PROPERTY(int pageSize READ getPageSize WRITE setPageSize NOTIFY pageSizeChanged)
+    Q_PROPERTY(int pageCount READ getPageCount NOTIFY pageCountChanged)
 
 public:
     enum PagingInfoRole
@@ -42,17 +43,19 @@ public:
 signals:
     void pageChanged();
     void pageSizeChanged();
+    void pageCountChanged();
 
 private:
     int getPage() const;
     void setPage(int page);
     int getPageSize() const;
     void setPageSize(int pageSize);
+    int getPageCount()const;
     int getStartIndex() const;
     void reset();
 
 private:
-    int m_page{0};
+    int m_page{1};
     int m_pageSize{1};
 };
 
