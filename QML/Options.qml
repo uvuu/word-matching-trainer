@@ -86,13 +86,23 @@ Item {
     Pagination {
         id: pagination
 
-        currentPage: pagedExercisesModel.page
         pageCount: pagedExercisesModel.pageCount
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         visible: pageCount > 1
 
-        onCurrentPageChanged: pagedExercisesModel.page = currentPage
+        // The two bindings below allow to change the page in both directions,
+        // i.e. from the pagination and the model accordingly.
+        // This is a bidirectional/two-ways binding.
+        Binding on currentPage {
+            value: pagedExercisesModel.page
+        }
+
+        Binding {
+            target: pagedExercisesModel
+            property: "page"
+            value: pagination.currentPage
+        }
     }
 
     Settings {

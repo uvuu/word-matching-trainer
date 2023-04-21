@@ -3,6 +3,15 @@
 PagingProxyModel::PagingProxyModel(QObject *parent)
     : QAbstractProxyModel(parent)
 {
+    // Maintain the page index within the count of pages
+    connect(this, &PagingProxyModel::pageCountChanged,
+        [this] ()
+        {
+            if (getPage() > getPageCount())
+            {
+                setPage(getPageCount());
+            }
+        });
 }
 
 QModelIndex PagingProxyModel::index(int row, int column, const QModelIndex& parent) const
