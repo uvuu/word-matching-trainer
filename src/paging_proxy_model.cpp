@@ -82,6 +82,15 @@ int PagingProxyModel::getPage() const
 
 void PagingProxyModel::setPage(int page)
 {
+    if (page <= 0 || page > getPageCount())
+    {
+        qWarning() << "PagingProxyModel::setPage:"
+            << "The attepmt to set an invalid page value ="
+            << page;
+
+        return;
+    }
+
     if (m_page != page)
     {
         m_page = page;
@@ -98,6 +107,15 @@ int PagingProxyModel::getPageSize() const
 
 void PagingProxyModel::setPageSize(int pageSize)
 {
+    if (pageSize <= 0)
+    {
+        qWarning() << "PagingProxyModel::setPageSize:"
+            << "The attepmt to set an invalid page size value ="
+            << pageSize;
+
+        return;
+    }
+
     if (m_pageSize != pageSize)
     {
         m_pageSize = pageSize;

@@ -78,7 +78,6 @@ Item {
             }
 
             const pageSize = height / (list.itemAtIndex(0).height + spacing)
-            //TODO: Move the check to the model itself. Probably add the assert there.
             pagedExercisesModel.pageSize = pageSize > 0 ? pageSize : 1
         }
     }
