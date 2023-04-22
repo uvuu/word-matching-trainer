@@ -37,7 +37,7 @@ void Performer::run()
         TasksHandler tasksHandler{m_exercises[m_options.getExerciseIndex()].getTasks()};
 
         // TODO: decide how to handle all this mess with m_flag
-        while(m_flag)
+        while (m_flag)
         {
             setTask(tasksHandler.getNextTask());
             setRemainingTime(questionTime);

@@ -19,7 +19,7 @@ QStringList TasksHandler::getNextTask()
     auto task = m_tasks[getNextIndex()].split(' ');
 
     // Put whitespaces between words as a separate item
-    for(int i = 1; i < task.size(); i += 2)
+    for (int i = 1; i < task.size(); i += 2)
     {
         task.insert(i, " ");
     }
@@ -30,7 +30,7 @@ QStringList TasksHandler::getNextTask()
 int TasksHandler::getNextIndex()
 {
     auto index = m_distribution(mt);
-    while(m_previousTaskIndex == index)
+    while (m_previousTaskIndex == index)
     {
         index = m_distribution(mt);
     }
