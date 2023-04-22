@@ -78,7 +78,6 @@ Item {
                 property bool isExercisedWord: modelData[0] === "["
 
                 text: modelData
-                wrapMode: Label.Wrap
                 horizontalAlignment: Label.AlignHCenter
                 color: {
                     if (isExercisedWord) {
