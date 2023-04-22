@@ -40,12 +40,12 @@ void ExerciseViewData::updateGapLength()
     for (const auto& task : tasks)
     {
         auto itMatch = re.globalMatch(task);
-        while (itMatch.hasNext()) {
+        while (itMatch.hasNext())
+        {
             const auto match = itMatch.next();
             if (match.hasMatch())
             {
-                const auto w = fm.boundingRect(match.captured()).width();
-                m_gapLength = qMax(m_gapLength, w);
+                m_gapLength = qMax(m_gapLength, fm.width(match.captured()));
             }
         }
     }
