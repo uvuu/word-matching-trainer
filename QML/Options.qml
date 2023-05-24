@@ -19,6 +19,12 @@ Item {
 
         width: parent.width
 
+        FlatButton {
+            text: "<font size=\"5\">\u2699</font>"
+            implicitWidth: implicitHeight
+            Layout.alignment: Qt.AlignRight
+        }
+
         // TODO: Simplify TimeOptions
         TimeOption {
             id: questionTime
