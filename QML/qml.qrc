@@ -8,5 +8,6 @@
         <file>Border.qml</file>
         <file>TimeOption.qml</file>
         <file>Pagination.qml</file>
+        <file>SettingsPage.qml</file>
     </qresource>
 </RCC>

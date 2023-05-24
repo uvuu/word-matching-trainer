@@ -9,6 +9,7 @@ import com.uvuu.qml 1.0 // Here we acquire the PagingProxyModel type
 Item {
     property var lastClickedButton : null
 
+    //TODO: Make buttons highlighting more general. Probably via changing FlatButton.
     StackView.onActivating: {
         lastClickedButton.color = Material.backgroundColor
         lastClickedButton.textColor = Material.foreground
@@ -23,6 +24,14 @@ Item {
             text: "<font size=\"5\">\u2699</font>"
             implicitWidth: implicitHeight
             Layout.alignment: Qt.AlignRight
+
+            onClicked: {
+                color = Material.foreground
+                textColor = Material.backgroundColor
+                lastClickedButton = this
+
+                stackView.push(settingsPage)
+            }
         }
 
         // TODO: Simplify TimeOptions
@@ -122,5 +131,11 @@ Item {
         id: training
 
         Training {}
+    }
+
+    Component {
+        id: settingsPage
+
+        SettingsPage {}
     }
 }
