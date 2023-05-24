@@ -45,7 +45,7 @@ void ExerciseViewData::updateGapLength()
             const auto match = itMatch.next();
             if (match.hasMatch())
             {
-                m_gapLength = qMax(m_gapLength, fm.width(match.captured()));
+                m_gapLength = qMax(m_gapLength, fm.horizontalAdvance(match.captured()));
             }
         }
     }
