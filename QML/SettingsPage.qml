@@ -35,5 +35,14 @@ Item {
                 onClicked: console.log(parent.text)
             }
         }
+
+        Label {
+            text: "Maximum gap:"
+            Layout.fillWidth: true
+        }
+
+        CheckBox {
+            checked: true
+        }
     }
 }
