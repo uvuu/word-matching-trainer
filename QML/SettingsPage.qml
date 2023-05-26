@@ -15,25 +15,24 @@ Item {
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 2
         anchors.top: back.bottom
         anchors.topMargin: 20
         //width: parent.width
 
-        RowLayout {
-            Label {
-                text: "Data file:"
-                Layout.fillWidth: true
-            }
+        Label {
+            text: "Data file:"
+            Layout.fillWidth: true
+        }
 
-            Label {
-                text: "data.txt"
-                color: "#60ABF6"
+        Label {
+            text: "data.txt"
+            color: "#60ABF6"
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: console.log(parent.text)
-                }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: console.log(parent.text)
             }
         }
     }
