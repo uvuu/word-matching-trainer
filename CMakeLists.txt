@@ -123,6 +123,7 @@ target_compile_options(${PROJECT_NAME}
 
 # [CMAKE_]COMPILE_WARNING_AS_ERROR is only available since version 3.24
 #set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_WARNING_AS_ERROR ON)
+
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         Threads::Threads
