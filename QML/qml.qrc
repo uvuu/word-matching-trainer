@@ -9,5 +9,6 @@
         <file>TimeOption.qml</file>
         <file>Pagination.qml</file>
         <file>SettingsPage.qml</file>
+        <file>ColorTextEdit.qml</file>
     </qresource>
 </RCC>
