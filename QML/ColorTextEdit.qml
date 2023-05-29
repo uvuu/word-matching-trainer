@@ -29,7 +29,7 @@ Item {
         visible: !rgbText.visible
 
         validator: RegularExpressionValidator {
-            regularExpression: /^#(?:[0-9a-fA-F]{3}){1,2}$/
+            regularExpression: /^#(?:[0-9a-fA-F]{6}){1}$/
         }
 
         Keys.onEscapePressed: editingFinished()
