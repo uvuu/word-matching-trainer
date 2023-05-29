@@ -34,6 +34,12 @@ Item {
 
         Keys.onEscapePressed: editingFinished()
 
+        onTextChanged: {
+            if (acceptableInput) {
+                color = text
+            }
+        }
+
         onEditingFinished: {
             focus = false
 
