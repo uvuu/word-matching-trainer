@@ -26,7 +26,6 @@ Item {
         columns: 2
         anchors.top: back.bottom
         anchors.topMargin: 20
-        //width: parent.width
 
         Label {
             text: "Data file:"
