@@ -1,7 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.12
 
-
 Item {
     width: childrenRect.width
     height: childrenRect.height
@@ -9,26 +8,48 @@ Item {
     Label {
         id: rgbText
 
-        text: "#" + (color.r * 255).toString(16) + (color.g * 255).toString(16) + (color.b * 255).toString(16)
+        text: "#" + colorToHex(color.r) + colorToHex(color.g) + colorToHex(color.b)
         font.capitalization: Font.AllUppercase
 
         MouseArea {
             anchors.fill: parent
             onClicked: rgbText.visible = false
         }
+
+        function colorToHex(color)
+        {
+            const hex = (Math.round(color * 255)).toString(16)
+            return (hex.length < 2) ? "0" + hex : hex
+        }
     }
 
     TextInput {
         color: rgbText.color
         font: rgbText.font
-        text: rgbText.text
         visible: !rgbText.visible
+
+        validator: RegularExpressionValidator {
+            regularExpression: /^#(?:[0-9a-fA-F]{3}){1,2}$/
+        }
 
         Keys.onEscapePressed: editingFinished()
 
         onEditingFinished: {
             focus = false
+
+            if (acceptableInput) {
+                rgbText.color = text
+            } else {
+                text = rgbText.text
+            }
+
             rgbText.visible = true
+        }
+
+        onFocusChanged: {
+            if (!focus) {
+                editingFinished()
+            }
         }
 
         onVisibleChanged: {
@@ -36,5 +57,7 @@ Item {
                 forceActiveFocus()
             }
         }
+
+        Component.onCompleted: text = rgbText.text
     }
 }
