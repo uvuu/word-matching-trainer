@@ -81,7 +81,7 @@ Item {
                 horizontalAlignment: Label.AlignHCenter
                 color: {
                     if (isExercisedWord) {
-                        (performer.remainingTime != 0) ? "transparent" : "yellow"
+                        (performer.remainingTime !== 0) ? "transparent" : "yellow"
                     } else {
                         "white"
                     }
