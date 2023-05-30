@@ -56,6 +56,6 @@ Item {
             Layout.fillWidth: true
         }
 
-        ColorTextEdit {}
+        ColorTextInput {}
     }
 }
