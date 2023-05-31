@@ -120,8 +120,6 @@ Item {
     }
 
     Settings {
-        id: settings
-
         property alias page: pagination.currentPage
         property alias questionTime: questionTime.value
         property alias answerTime: answerTime.value
