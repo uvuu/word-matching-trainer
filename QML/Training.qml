@@ -91,7 +91,7 @@ Item {
                 Component.onCompleted: {
                     text = text.replace('[', '').replace(']', '')
                     // Set the gap width
-                    if (isExercisedWord && DefaultSettings.maximumGap) {
+                    if (isExercisedWord && DefaultSettings.useMaximumGap) {
                         width = exerciseViewData.gapLength
                     }
                     wordsSet.alignWords()

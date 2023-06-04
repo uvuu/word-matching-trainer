@@ -51,18 +51,18 @@ Item {
         }
 
         Label {
-            text: "Maximum gap:"
+            text: "Use maximum gap:"
             Layout.fillWidth: true
         }
 
         CheckBox {
             id: maximumGap
 
-            checked: DefaultSettings.maximumGap
+            checked: DefaultSettings.useMaximumGap
 
             Binding {
                 target: DefaultSettings
-                property: "maximumGap"
+                property: "useMaximumGap"
                 value: maximumGap.checked
             }
         }
