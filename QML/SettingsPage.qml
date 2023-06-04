@@ -3,10 +3,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Qt.labs.platform 1.0
 import Qt.labs.settings 1.0
-import "default_settings.js" as DefaultSettings
 
 Item {
-
     Pane {
           anchors.fill: parent
           focusPolicy: Qt.ClickFocus
@@ -37,12 +35,18 @@ Item {
         Label {
             id: dataFile
 
-            text: DefaultSettings.DATA_FILE
+            text: DefaultSettings.dataFile
             color: "#60ABF6"
 
             MouseArea {
                 anchors.fill: parent
                 onClicked: console.log(parent.text)
+            }
+
+            Binding {
+                target: DefaultSettings
+                property: "dataFile"
+                value: dataFile.text
             }
         }
 
@@ -54,7 +58,13 @@ Item {
         CheckBox {
             id: maximumGap
 
-            checked: DefaultSettings.MAXIMUM_GAP
+            checked: DefaultSettings.maximumGap
+
+            Binding {
+                target: DefaultSettings
+                property: "maximumGap"
+                value: maximumGap.checked
+            }
         }
 
         Label {
@@ -65,13 +75,13 @@ Item {
         ColorTextInput {
             id: answerColor
 
-            color: DefaultSettings.ANSWER_COLOR
-        }
-    }
+            color: DefaultSettings.answerColor
 
-    Settings {
-        property alias dataFile: dataFile.text
-        property alias maximumGap: maximumGap.checked
-        property alias answerColor: answerColor.color
+            Binding {
+                target: DefaultSettings
+                property: "answerColor"
+                value: answerColor.color
+            }
+        }
     }
 }

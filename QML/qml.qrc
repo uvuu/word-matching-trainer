@@ -10,6 +10,7 @@
         <file>Pagination.qml</file>
         <file>SettingsPage.qml</file>
         <file>ColorTextInput.qml</file>
-        <file>default_settings.js</file>
+        <file>DefaultSettings.qml</file>
+        <file>qmldir</file>
     </qresource>
 </RCC>
