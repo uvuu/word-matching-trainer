@@ -10,5 +10,6 @@
         <file>Pagination.qml</file>
         <file>SettingsPage.qml</file>
         <file>ColorTextInput.qml</file>
+        <file>default_settings.js</file>
     </qresource>
 </RCC>

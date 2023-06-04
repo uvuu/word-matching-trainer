@@ -1,8 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import Qt.labs.settings 1.0
 
 import com.uvuu.qml 1.0 // Here we acquire the ExerciseViewData type
+import "default_settings.js" as DefaultSettings
 
 Item {
     Component.onCompleted: performer.run()
@@ -81,7 +83,11 @@ Item {
                 horizontalAlignment: Label.AlignHCenter
                 color: {
                     if (isExercisedWord) {
-                        (performer.remainingTime !== 0) ? "transparent" : "yellow"
+                        if (performer.remainingTime !== 0) {
+                            "transparent"
+                        } else {
+                            settings.value("answerColor", DefaultSettings.ANSWER_COLOR)
+                        }
                     } else {
                         "white"
                     }
@@ -90,7 +96,8 @@ Item {
                 Component.onCompleted: {
                     text = text.replace('[', '').replace(']', '')
                     // Set the gap width
-                    if (isExercisedWord) {
+                    const maximumGap = settings.value("maximumGap", DefaultSettings.MAXIMUM_GAP)
+                    if (isExercisedWord && maximumGap) {
                         width = exerciseViewData.gapLength
                     }
                     wordsSet.alignWords()
@@ -106,5 +113,9 @@ Item {
                 }
             }
         }
+    }
+
+    Settings {
+        id: settings
     }
 }

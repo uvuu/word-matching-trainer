@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Qt.labs.platform 1.0
+import Qt.labs.settings 1.0
+import "default_settings.js" as DefaultSettings
 
 Item {
 
@@ -33,7 +35,9 @@ Item {
         }
 
         Label {
-            text: "data.txt"
+            id: dataFile
+
+            text: DefaultSettings.DATA_FILE
             color: "#60ABF6"
 
             MouseArea {
@@ -48,7 +52,9 @@ Item {
         }
 
         CheckBox {
-            checked: true
+            id: maximumGap
+
+            checked: DefaultSettings.MAXIMUM_GAP
         }
 
         Label {
@@ -56,6 +62,16 @@ Item {
             Layout.fillWidth: true
         }
 
-        ColorTextInput {}
+        ColorTextInput {
+            id: answerColor
+
+            color: DefaultSettings.ANSWER_COLOR
+        }
+    }
+
+    Settings {
+        property alias dataFile: dataFile.text
+        property alias maximumGap: maximumGap.checked
+        property alias answerColor: answerColor.color
     }
 }
