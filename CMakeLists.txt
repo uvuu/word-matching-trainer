@@ -39,7 +39,7 @@ set(QML_URI com.uvuu.qml)
 # Headers are needed here to be visible in the project tree
 set(PROJECT_SOURCES
     ${RESOURCE_SOURCES} # This variable is defined in res/CMakeLists.txt
-    QML/qml.qrc
+    qml/qml.qrc
 
     src/main.cpp
     src/data_reader.h
@@ -55,8 +55,8 @@ set(PROJECT_SOURCES
     src/paging_proxy_model.h
     src/paging_proxy_model.cpp
 
-    src/QML/exercise_view_data.h
-    src/QML/exercise_view_data.cpp
+    src/qml/exercise_view_data.h
+    src/qml/exercise_view_data.cpp
 )
 
 if(QT_VERSION_6_OR_HIGHER)
@@ -87,7 +87,7 @@ else()
 
     # This is an alternative to the modern way of registering a QML type and is suitable
     # for the 5th Qt version. Obviously it relays on qmlRegister*() functions.
-    target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML/qml_registrar.cpp)
+    target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/qml/qml_registrar.cpp)
 
     # The old way to tell CMake where the Android build files are(also see QT_ANDROID_PACKAGE_SOURCE_DIR)
     set(ANDROID_PACKAGE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/res/android" CACHE INTERNAL "")
@@ -95,7 +95,7 @@ endif()
 
 # It is necessary to include this directory since the file with registrations will be
 # created in the 'build' directory and it includes files without relative paths.
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/QML)
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src/qml)
 
 # To make the build system to use AndroidManifest.xml and other project-specified resourses
 # we need to point where they are. QT_ANDROID_PACKAGE_SOURCE_DIR is available since Qt6,
@@ -133,7 +133,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 # Allows us to include any files in 'src' directory without putting 'src/' in front of it.
-# See '#include "exercise.h"' in QML/exercise_view_data.h.
+# See '#include "exercise.h"' in qml/exercise_view_data.h.
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src)
 
 # The following options are required to avoid the console window showing along with the app window.
