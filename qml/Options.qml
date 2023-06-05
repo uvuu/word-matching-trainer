@@ -123,6 +123,8 @@ Item {
         property alias page: pagination.currentPage
         property alias questionTime: questionTime.value
         property alias answerTime: answerTime.value
+
+        category: "OptionsPage"
     }
 
     Component {

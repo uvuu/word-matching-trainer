@@ -7,4 +7,6 @@ Settings {
     property string dataFile: "data.txt"
     property bool useMaximumGap: true
     property color answerColor: "yellow"
+
+    category: "DefaultSettings"
 }

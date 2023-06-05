@@ -27,5 +27,7 @@ ApplicationWindow {
         property alias y: window.y
         property alias width: window.width
         property alias height: window.height
+
+        category: "ApplicationWindow"
     }
 }
