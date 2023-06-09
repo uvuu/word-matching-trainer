@@ -1,0 +1,5 @@
+Border 1.0 Border.qml
+ColorTextInput 1.0 ColorTextInput.qml
+FlatButton 1.0 FlatButton.qml
+Pagination 1.0 Pagination.qml
+TimeOption 1.0 TimeOption.qml

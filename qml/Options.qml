@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.12
 import Qt.labs.settings 1.0
 
 import com.uvuu.qml 1.0 // Here we acquire the PagingProxyModel type
+import "components"
 
 Item {
     property var lastClickedButton : null

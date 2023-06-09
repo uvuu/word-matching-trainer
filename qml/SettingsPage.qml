@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.12
 import Qt.labs.platform 1.0
 import Qt.labs.settings 1.0
 
+import "components"
+
 Item {
     Pane {
           anchors.fill: parent

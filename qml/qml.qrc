@@ -4,13 +4,14 @@
         <file>Options.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>Training.qml</file>
-        <file>FlatButton.qml</file>
-        <file>Border.qml</file>
-        <file>TimeOption.qml</file>
-        <file>Pagination.qml</file>
         <file>SettingsPage.qml</file>
-        <file>ColorTextInput.qml</file>
         <file>DefaultSettings.qml</file>
         <file>qmldir</file>
+        <file>components/Border.qml</file>
+        <file>components/ColorTextInput.qml</file>
+        <file>components/FlatButton.qml</file>
+        <file>components/Pagination.qml</file>
+        <file>components/qmldir</file>
+        <file>components/TimeOption.qml</file>
     </qresource>
 </RCC>
