@@ -16,7 +16,7 @@ ApplicationWindow {
     StackView {
         id: stackView
 
-        initialItem: "Options.qml"
+        initialItem: "pages/OptionsPage.qml"
         anchors.fill: parent
         anchors.margins: (parent.width < parent.height ? parent.width : parent.height) * 0.05
     }

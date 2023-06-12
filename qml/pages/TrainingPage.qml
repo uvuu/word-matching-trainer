@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.12
 import Qt.labs.settings 1.0
 
 import com.uvuu.qml 1.0 // Here we acquire the ExerciseViewData type
-import "components"
+import "../components"
+import "../singletons"
 
 Item {
     Component.onCompleted: performer.run()
